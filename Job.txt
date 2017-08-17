@@ -1,0 +1,15 @@
+//Search turns up no best practice for launching PowerShell scripts from Task Scheduler.
+//Most solutions cause a window to quickly popup
+//This solution uses WScript to run a silent task in the background so it will not interupt your interactive work.
+//Create a Basic Task using the following form values.
+//	Program/Script: WScript
+//	Add arguments: //E:JScript "C:\<path>\Job.txt" "C:\<path>\MyScript.ps1"
+//Where the path for Job.txt points to this file correctly, and the .ps1 is the script you want to execute.
+//PowerShell note: To specify 32bit or 64bit version instead of letting windows choose you must use the full path.
+//Confusingly enough SysWow64 contains the 32bit version of PowerShell.
+//	C:\\Windows\Syswow64\\WindowsPowerShell\\v1.0\\powershell.exe
+//On a 64bit version of Windows powershell is found under System32.
+//	C:\\Windows\System32\\WindowsPowerShell\\v1.0\\powershell.exe
+
+WScript.CreateObject("Wscript.Shell").Run('C:\\Windows\\Syswow64\\WindowsPowerShell\\v1.0\\powershell.exe -File "' + WScript.Arguments(0) + '" -NoProfile',0,true);
+
